@@ -16,6 +16,8 @@ public:
     void displayGraph();
     static UndirectedGraph Union(UndirectedGraph graphA, UndirectedGraph graphB);
     static UndirectedGraph Intersection(UndirectedGraph graphA, UndirectedGraph graphB);
+    UndirectedGraph Subtraction(UndirectedGraph graphA);
+    UndirectedGraph Complement();
 };
 
 UndirectedGraph::UndirectedGraph(int V){
@@ -66,4 +68,35 @@ UndirectedGraph UndirectedGraph::Intersection(UndirectedGraph graphA, Undirected
     }
 
     return intersection_graph;    
+}
+
+UndirectedGraph UndirectedGraph::Subtraction(UndirectedGraph graphA){
+    int V = graphA.numVertices;
+    UndirectedGraph subtracted_graph(V);
+
+    for (int i = 0; i < V; i++)
+    {
+        set_difference(graph[i].begin(), graph[i].end(), graphA.graph[i].begin(), graphA.graph[i].end(), inserter(subtracted_graph.graph[i], subtracted_graph.graph[i].begin()));
+    }
+
+    return subtracted_graph;    
+}
+
+UndirectedGraph UndirectedGraph::Complement(){
+    UndirectedGraph complement_graph(numVertices);
+
+    set <int> allVer;
+    for (int i = 0; i < numVertices; i++)
+    {
+        allVer.insert(i);
+    }  
+
+    for (int i = 0; i < numVertices; i++)
+    {
+        allVer.erase(i);
+        set_difference(allVer.begin(), allVer.end(), graph[i].begin(), graph[i].end(), inserter(complement_graph.graph[i], complement_graph.graph[i].begin()));
+        allVer.insert(i);
+    }
+
+    return complement_graph;    
 }

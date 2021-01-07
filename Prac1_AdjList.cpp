@@ -1,3 +1,6 @@
+// Implement the graph operation for union, intersection,
+// compliment and subtraction of the two different graphs
+
 #include <iostream>
 #include "UndirectedGraph.h"
 using namespace std;
@@ -23,6 +26,14 @@ int main(){
     cout << "IntersectionGraph" << endl;
     UndirectedGraph IntersectionGraph = UndirectedGraph::Intersection(graphA, graphB);
     IntersectionGraph.displayGraph();
+
+    cout << "GraphA - GraphB" << endl;
+    UndirectedGraph Subt_A_B = graphA.Subtraction(graphB);
+    Subt_A_B.displayGraph();
+
+    cout << "~GraphA" << endl;
+    UndirectedGraph Comp_A = graphA.Complement();
+    Comp_A.displayGraph();
 
     return 0;
 }

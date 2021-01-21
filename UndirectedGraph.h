@@ -53,7 +53,13 @@ UndirectedGraph UndirectedGraph::Union(UndirectedGraph graphA, UndirectedGraph g
 
     for (int i = 0; i < V; i++)
     {
-        set_union(graphA.graph[i].begin(), graphA.graph[i].end(), graphB.graph[i].begin(), graphB.graph[i].end(), inserter(union_graph.graph[i], union_graph.graph[i].begin()));
+        set_union(
+            graphA.graph[i].begin(), 
+            graphA.graph[i].end(), 
+            graphB.graph[i].begin(), 
+            graphB.graph[i].end(), 
+            inserter(union_graph.graph[i], union_graph.graph[i].begin())
+            );
     }
 
     return union_graph;    
@@ -65,7 +71,13 @@ UndirectedGraph UndirectedGraph::Intersection(UndirectedGraph graphA, Undirected
 
     for (int i = 0; i < V; i++)
     {
-        set_intersection(graphA.graph[i].begin(), graphA.graph[i].end(), graphB.graph[i].begin(), graphB.graph[i].end(), inserter(intersection_graph.graph[i], intersection_graph.graph[i].begin()));
+        set_intersection(
+            graphA.graph[i].begin(), 
+            graphA.graph[i].end(), 
+            graphB.graph[i].begin(), 
+            graphB.graph[i].end(), 
+            inserter(intersection_graph.graph[i], intersection_graph.graph[i].begin())
+            );
     }
 
     return intersection_graph;    
@@ -77,14 +89,23 @@ UndirectedGraph UndirectedGraph::Subtraction(UndirectedGraph graphA, UndirectedG
 
     for (int i = 0; i < V; i++)
     {
-        set_difference(graphA.graph[i].begin(), graphA.graph[i].end(), graphB.graph[i].begin(), graphB.graph[i].end(), inserter(subtracted_graph.graph[i], subtracted_graph.graph[i].begin()));
+        set_difference(
+            graphA.graph[i].begin(), 
+            graphA.graph[i].end(), 
+            graphB.graph[i].begin(), 
+            graphB.graph[i].end(), 
+            inserter(subtracted_graph.graph[i], subtracted_graph.graph[i].begin())
+            );
     }
 
     return subtracted_graph;    
 }
 
 UndirectedGraph UndirectedGraph::RingSum(UndirectedGraph graphA, UndirectedGraph graphB){   
-    return Subtraction(Union(graphA, graphB), Intersection(graphA, graphB));
+    return Subtraction(
+        Union(graphA, graphB), 
+        Intersection(graphA, graphB)
+        );
 }
 
 UndirectedGraph UndirectedGraph::Complement(){
@@ -99,7 +120,13 @@ UndirectedGraph UndirectedGraph::Complement(){
     for (int i = 0; i < numVertices; i++)
     {
         allVer.erase(i);
-        set_difference(allVer.begin(), allVer.end(), graph[i].begin(), graph[i].end(), inserter(complement_graph.graph[i], complement_graph.graph[i].begin()));
+        set_difference(
+            allVer.begin(), 
+            allVer.end(), 
+            graph[i].begin(),
+            graph[i].end(), 
+            inserter(complement_graph.graph[i], complement_graph.graph[i].begin())
+            );
         allVer.insert(i);
     }
 

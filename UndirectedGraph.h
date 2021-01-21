@@ -16,7 +16,8 @@ public:
     void displayGraph();
     static UndirectedGraph Union(UndirectedGraph graphA, UndirectedGraph graphB);
     static UndirectedGraph Intersection(UndirectedGraph graphA, UndirectedGraph graphB);
-    UndirectedGraph Subtraction(UndirectedGraph graphA);
+    static UndirectedGraph Subtraction(UndirectedGraph graphA, UndirectedGraph graphB);
+    static UndirectedGraph RingSum(UndirectedGraph graphA, UndirectedGraph graphB);
     UndirectedGraph Complement();
 };
 
@@ -47,7 +48,7 @@ void UndirectedGraph::addEdge(int src, int dest){
 }
 
 UndirectedGraph UndirectedGraph::Union(UndirectedGraph graphA, UndirectedGraph graphB){
-    int V = graphA.numVertices;
+    int V = max(graphA.numVertices, graphB.numVertices);
     UndirectedGraph union_graph(V);
 
     for (int i = 0; i < V; i++)
@@ -59,7 +60,7 @@ UndirectedGraph UndirectedGraph::Union(UndirectedGraph graphA, UndirectedGraph g
 }
 
 UndirectedGraph UndirectedGraph::Intersection(UndirectedGraph graphA, UndirectedGraph graphB){
-    int V = graphA.numVertices;
+    int V = max(graphA.numVertices, graphB.numVertices);
     UndirectedGraph intersection_graph(V);
 
     for (int i = 0; i < V; i++)
@@ -70,16 +71,20 @@ UndirectedGraph UndirectedGraph::Intersection(UndirectedGraph graphA, Undirected
     return intersection_graph;    
 }
 
-UndirectedGraph UndirectedGraph::Subtraction(UndirectedGraph graphA){
-    int V = graphA.numVertices;
+UndirectedGraph UndirectedGraph::Subtraction(UndirectedGraph graphA, UndirectedGraph graphB){
+    int V = max(graphA.numVertices, graphB.numVertices);
     UndirectedGraph subtracted_graph(V);
 
     for (int i = 0; i < V; i++)
     {
-        set_difference(graph[i].begin(), graph[i].end(), graphA.graph[i].begin(), graphA.graph[i].end(), inserter(subtracted_graph.graph[i], subtracted_graph.graph[i].begin()));
+        set_difference(graphA.graph[i].begin(), graphA.graph[i].end(), graphB.graph[i].begin(), graphB.graph[i].end(), inserter(subtracted_graph.graph[i], subtracted_graph.graph[i].begin()));
     }
 
     return subtracted_graph;    
+}
+
+UndirectedGraph UndirectedGraph::RingSum(UndirectedGraph graphA, UndirectedGraph graphB){   
+    return Subtraction(Union(graphA, graphB), Intersection(graphA, graphB));
 }
 
 UndirectedGraph UndirectedGraph::Complement(){

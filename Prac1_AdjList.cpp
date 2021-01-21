@@ -28,8 +28,12 @@ int main(){
     IntersectionGraph.displayGraph();
 
     cout << "GraphA - GraphB" << endl;
-    UndirectedGraph Subt_A_B = graphA.Subtraction(graphB);
+    UndirectedGraph Subt_A_B = UndirectedGraph::Subtraction(graphA, graphB);
     Subt_A_B.displayGraph();
+
+    cout << "GraphA (+) GraphB ... RingSum" << endl;
+    UndirectedGraph RingSum_A_B = UndirectedGraph::RingSum(graphA, graphB);
+    RingSum_A_B.displayGraph();
 
     cout << "~GraphA" << endl;
     UndirectedGraph Comp_A = graphA.Complement();

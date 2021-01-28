@@ -39,6 +39,7 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "xtree": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "set": "cpp"
     }
 }

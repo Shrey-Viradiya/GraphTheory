@@ -2,15 +2,17 @@
 
 #include<iostream>
 #include<algorithm>
+#include<cstring>
 
 class UndirectedGraphMatrix
 {
 private:
     int noVertices, edges;
+    char name[50];
     int **graph;
     int *degrees;
 public:
-    UndirectedGraphMatrix(int V);
+    UndirectedGraphMatrix(const char n[], int V);
     void addEdge(int src, int dest);
     void deleteEdge(int src, int dest);
     int isEdge(int src, int dest);
@@ -20,11 +22,12 @@ public:
     int * getSortedDegrees();
     void displayGraph();
     ~UndirectedGraphMatrix();
-    static bool CheckIsomorphism(UndirectedGraphMatrix graphA, UndirectedGraphMatrix graphB);
+    static bool CheckIsomorphism(UndirectedGraphMatrix &graphA, UndirectedGraphMatrix &graphB);
 };
 
-UndirectedGraphMatrix::UndirectedGraphMatrix(int V){
+UndirectedGraphMatrix::UndirectedGraphMatrix(const char n[50], int V){
     noVertices = V;
+    strcpy_s(name, n);
     edges = 0;
     graph = new int *[noVertices];
     degrees = new int [noVertices] {0};
@@ -32,6 +35,9 @@ UndirectedGraphMatrix::UndirectedGraphMatrix(int V){
     {
         graph[i] = new int[noVertices] {0};
     }
+
+    using namespace std;
+    cout << "Graph Created: " << name << endl;
 }
 
 UndirectedGraphMatrix::~UndirectedGraphMatrix(){
@@ -41,6 +47,9 @@ UndirectedGraphMatrix::~UndirectedGraphMatrix(){
     }
     delete[]graph;
     delete[]degrees;
+
+    using namespace std;
+    cout << "Memory released of the graph " << name << endl;
 }
 
 void UndirectedGraphMatrix::addEdge(int src, int dest){
@@ -108,7 +117,7 @@ int * UndirectedGraphMatrix::getSortedDegrees(){
 void UndirectedGraphMatrix::displayGraph(){
     using namespace std;
 
-    cout << "Graph:" << endl;
+    cout << "\nGraph:" << name << endl;
     cout << "=================" << endl;
     cout << "No of Vertices: " << noVertices << endl;
     cout << "No of Edges: " << edges << endl;
@@ -121,9 +130,10 @@ void UndirectedGraphMatrix::displayGraph(){
         }
         cout << endl;
     }
+    cout << endl;
 }
 
-bool UndirectedGraphMatrix::CheckIsomorphism(UndirectedGraphMatrix graphA, UndirectedGraphMatrix graphB){
+bool UndirectedGraphMatrix::CheckIsomorphism(UndirectedGraphMatrix &graphA, UndirectedGraphMatrix &graphB){
 
     // simple check for number of vertices and no if edges
     if(

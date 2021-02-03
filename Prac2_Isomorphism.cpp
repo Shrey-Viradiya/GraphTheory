@@ -6,7 +6,9 @@ int main(){
 
     using namespace std;
     
-    UndirectedGraphMatrix graphA(4), graphB(3), graphC(4);
+    UndirectedGraphMatrix graphA("Euler", 4);
+    UndirectedGraphMatrix graphB("Kirkman", 3);
+    UndirectedGraphMatrix graphC("Kirchhoff", 4);
     
     // adding some edges in graph A
     graphA.addEdge(0,1);
@@ -33,7 +35,5 @@ int main(){
     cout << "Isomorphism of graphA and graphB: " << UndirectedGraphMatrix::CheckIsomorphism(graphA, graphB) << endl;
     cout << "Isomorphism of graphA and graphC: " << UndirectedGraphMatrix::CheckIsomorphism(graphA, graphC) << endl;
     
-    // UndirectedGraphMatrix::CheckIsomorphism(graphA, graphC);
-
     return 0;
 }

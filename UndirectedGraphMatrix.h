@@ -15,6 +15,9 @@ private:
     
 public:
     UndirectedGraphMatrix(const char n[], int V);
+    UndirectedGraphMatrix(const UndirectedGraphMatrix & obj);
+    ~UndirectedGraphMatrix();
+
     void addEdge(int src, int dest);
     void deleteEdge(int src, int dest);
     int isEdge(int src, int dest);
@@ -23,9 +26,12 @@ public:
     int getDegree(int src);
     int * getSortedDegrees();
     char * getName();
+    int ** getGraphCopy();
     void displayGraph();
-    ~UndirectedGraphMatrix();
+    
+
     static bool CheckIsomorphism(UndirectedGraphMatrix &graphA, UndirectedGraphMatrix &graphB);
+    void minimumCutSet();
 };
 
 UndirectedGraphMatrix::UndirectedGraphMatrix(const char n[50], int V){
@@ -42,6 +48,19 @@ UndirectedGraphMatrix::UndirectedGraphMatrix(const char n[50], int V){
     using namespace std;
     cout << "Graph Created: " << name << endl;
 }
+
+// UndirectedGraphMatrix::UndirectedGraphMatrix(const UndirectedGraphMatrix &obj)
+// {
+// 	noVertices = obj.noVertices;
+//     strcpy_s(name, obj.name);
+//     edges = obj.edges;
+//     graph = (int *) obj.getGraphCopy();
+//     degrees = new int [noVertices] {0};
+//     for (int i = 0; i < noVertices; i++)
+//     {
+//         degrees[i] = obj.degrees[i];
+//     }
+// }
 
 UndirectedGraphMatrix::~UndirectedGraphMatrix(){
     for (int i = 0; i < noVertices; i++)
@@ -121,6 +140,20 @@ int * UndirectedGraphMatrix::getSortedDegrees(){
     std::copy(degrees, degrees+noVertices, sortedDegrees);
     std::sort(sortedDegrees, sortedDegrees+noVertices);
     return sortedDegrees;
+}
+
+int ** UndirectedGraphMatrix::getGraphCopy(){
+    int **graphCopy = new int *[noVertices];
+    
+    for (int i = 0; i < noVertices; i++)
+    {
+        graphCopy[i] = new int[noVertices];
+        for (int j = 0; j < noVertices; j++)
+        {
+            graphCopy[i][j] = graph[i][j];
+        }        
+    }
+    return graphCopy;
 }
 
 void UndirectedGraphMatrix::displayGraph(){
@@ -223,4 +256,53 @@ bool UndirectedGraphMatrix::CheckIsomorphism(UndirectedGraphMatrix &graphA, Undi
     }
 
     return true;
+}
+
+void UndirectedGraphMatrix::minimumCutSet(){
+    using namespace std;
+
+    cout << "\nGraph:" << name << endl;
+    cout << "=================" << endl;
+
+    int * degS = getSortedDegrees();
+
+    if(getNoVertices() < 2){
+        cout << "This is a single vertex graph...Cutting not possible." << endl;
+        return;
+    }
+
+    if (degS[0] == 0) {
+        cout << "Graph already disconnected....Cut set is empty." << endl;
+        return;
+    }
+
+    // for (int i = 1; i < degS[0]; i++)
+    // {
+    //     int **graphCopy = getGraphCopy();
+    //     int *visited = new int[getNoVertices()]{0};
+        
+    //     int temp = i;
+              
+    //     // Code remaining for the removing edge and checking disconnectivity
+
+    //     delete[] visited;
+    //     for (int i = 0; i < getNoVertices(); i++)
+    //     {
+    //         delete[] graphCopy[i];
+    //     }
+    //     delete[] graphCopy;
+    // }
+
+    for (int i = 0; i < getNoVertices(); i++)
+    {
+        if (getDegree(i) == degS[0])
+        {
+            for (int j = 0; j < getNoVertices(); j++)
+            {
+                if(isEdge(i,j))
+                    cout << i << "->" << j << endl;
+            }
+            return;        
+        }        
+    }    
 }

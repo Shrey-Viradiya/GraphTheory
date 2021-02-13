@@ -17,7 +17,7 @@ int main(){
     for (int i = 0; i < noDegrees; i++)
     {
         cin >> degrees[i];
-    }    
+    }
 
     applyHavelHakimi(degrees, noDegrees);
 

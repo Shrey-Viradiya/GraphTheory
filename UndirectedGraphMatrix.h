@@ -36,7 +36,7 @@ public:
 
 UndirectedGraphMatrix::UndirectedGraphMatrix(const char n[50], int V){
     noVertices = V;
-    strcpy_s(name, n);
+    std::strcpy(name, n);
     edges = 0;
     graph = new int *[noVertices];
     degrees = new int [noVertices] {0};

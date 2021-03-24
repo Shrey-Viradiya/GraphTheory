@@ -4,6 +4,8 @@
 #include<algorithm>
 #include<map>
 #include<cstring>
+#include<vector>
+#include"mincutsetutilities.h"
 
 class UndirectedGraphMatrix
 {
@@ -46,7 +48,7 @@ UndirectedGraphMatrix::UndirectedGraphMatrix(const char n[50], int V){
     }
 
     using namespace std;
-    cout << "Graph Created: " << name << endl;
+    cout << "\nGraph Created: " << name << endl;
 }
 
 // UndirectedGraphMatrix::UndirectedGraphMatrix(const UndirectedGraphMatrix &obj)
@@ -261,7 +263,7 @@ bool UndirectedGraphMatrix::CheckIsomorphism(UndirectedGraphMatrix &graphA, Undi
 void UndirectedGraphMatrix::minimumCutSet(){
     using namespace std;
 
-    cout << "\nGraph:" << name << endl;
+    cout << "\nGraph:" << name << "Cutset" << endl;
     cout << "=================" << endl;
 
     int * degS = getSortedDegrees();
@@ -276,33 +278,58 @@ void UndirectedGraphMatrix::minimumCutSet(){
         return;
     }
 
-    // for (int i = 1; i < degS[0]; i++)
-    // {
-    //     int **graphCopy = getGraphCopy();
-    //     int *visited = new int[getNoVertices()]{0};
-        
-    //     int temp = i;
-              
-    //     // Code remaining for the removing edge and checking disconnectivity
-
-    //     delete[] visited;
-    //     for (int i = 0; i < getNoVertices(); i++)
-    //     {
-    //         delete[] graphCopy[i];
-    //     }
-    //     delete[] graphCopy;
-    // }
-
+    int *visited = new int[getNoVertices()]{0};
+    DFS(0, graph, visited, getNoVertices());
     for (int i = 0; i < getNoVertices(); i++)
     {
-        if (getDegree(i) == degS[0])
+        if (visited[i] == 0)
         {
-            for (int j = 0; j < getNoVertices(); j++)
-            {
-                if(isEdge(i,j))
-                    cout << i << "->" << j << endl;
+            cout << "Graph already disconnected....Cut set is empty." << endl;
+            return;
+        }
+    }
+    
+
+    vector<pair<int, int>> edge_list;
+    for (int i = 0; i < getNoVertices(); i++)
+    {
+        for (int j = 0; j < i; j++)
+        {
+            if(isEdge(i,j)){
+                edge_list.push_back({i,j});
             }
-            return;        
-        }        
+        }
+    }
+
+    bool *check = new bool[edge_list.size()];
+    int *done = new int;
+    for (int i = 1; i < degS[0]; i++)
+    {
+        int **graphCopy = getGraphCopy();
+        *done = 0;
+        // Code remaining for the removing edge and checking disconnectivity
+        CombiEdges(done, edge_list, i, 0, 0, check, edge_list.size(), graphCopy, getNoVertices());
+
+        for (int i = 0; i < getNoVertices(); i++)
+        {
+            delete[] graphCopy[i];
+        }
+        delete[] graphCopy;
+    }
+
+    if(*done == 0)
+    {
+        for (int i = 0; i < getNoVertices(); i++)
+        {
+            if (getDegree(i) == degS[0])
+            {
+                for (int j = 0; j < getNoVertices(); j++)
+                {
+                    if(isEdge(i,j))
+                        cout << i << "<->" << j << endl;
+                }
+                return;        
+            }        
+        }
     }    
 }

@@ -31,5 +31,32 @@ int main(){
 
     graphA.minimumCutSet();
 
+    UndirectedGraphMatrix graphB("Kirchoff", 8);
+
+    // adding some edges in graph A
+
+    //  0 - 1 --- 4 - 5
+    //  | x |     | x |
+    //  2 - 3 --- 6 - 7
+
+    graphB.addEdge(0,1);
+    graphB.addEdge(2,3);
+    graphB.addEdge(0,3);
+    graphB.addEdge(1,2);
+    graphB.addEdge(0,2);
+    graphB.addEdge(1,3);
+    graphB.addEdge(4,5);
+    graphB.addEdge(5,6);
+    graphB.addEdge(6,7);
+    graphB.addEdge(7,4);
+    graphB.addEdge(4,6);
+    graphB.addEdge(5,7);
+    graphB.addEdge(1,4);
+    graphB.addEdge(3,6);
+
+    graphB.displayGraph();
+
+    graphB.minimumCutSet();
+
     return 0;
 }

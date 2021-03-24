@@ -56,7 +56,7 @@ int main(){
 
     graphB.displayGraph();
 
-    graphB.minimumCutSet();
+    graphB.minimumCutVertex();
 
     return 0;
 }

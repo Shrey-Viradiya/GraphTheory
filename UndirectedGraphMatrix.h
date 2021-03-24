@@ -34,6 +34,7 @@ public:
 
     static bool CheckIsomorphism(UndirectedGraphMatrix &graphA, UndirectedGraphMatrix &graphB);
     void minimumCutSet();
+    void minimumCutVertex();
 };
 
 UndirectedGraphMatrix::UndirectedGraphMatrix(const char n[50], int V){
@@ -73,7 +74,7 @@ UndirectedGraphMatrix::~UndirectedGraphMatrix(){
     delete[]degrees;
 
     using namespace std;
-    cout << "Memory released of the graph " << name << endl;
+    cout << "\nMemory released of the graph " << name << endl;
 }
 
 void UndirectedGraphMatrix::addEdge(int src, int dest){
@@ -303,10 +304,10 @@ void UndirectedGraphMatrix::minimumCutSet(){
 
     bool *check = new bool[edge_list.size()];
     int *done = new int;
+    *done = 0;
     for (int i = 1; i < degS[0]; i++)
     {
         int **graphCopy = getGraphCopy();
-        *done = 0;
         // Code remaining for the removing edge and checking disconnectivity
         CombiEdges(done, edge_list, i, 0, 0, check, edge_list.size(), graphCopy, getNoVertices());
 
@@ -332,4 +333,54 @@ void UndirectedGraphMatrix::minimumCutSet(){
             }        
         }
     }    
+}
+
+void UndirectedGraphMatrix::minimumCutVertex(){
+    using namespace std;
+
+    cout << "\nGraph:" << name << " CutVertex" << endl;
+    cout << "=================" << endl;
+    
+    int * degS = getSortedDegrees();
+
+    if(getNoVertices() < 2){
+        cout << "This is a single vertex graph...Cutting not possible." << endl;
+        return;
+    }
+
+    if (degS[0] == 0) {
+        cout << "Graph already disconnected....Cut set is empty." << endl;
+        return;
+    }
+
+    int *visited = new int[getNoVertices()]{0};
+    DFS(0, graph, visited, getNoVertices());
+    for (int i = 0; i < getNoVertices(); i++)
+    {
+        if (visited[i] == 0)
+        {
+            cout << "Graph already disconnected....Cut set is empty." << endl;
+            return;
+        }
+    }
+   
+    bool *check = new bool[getNoVertices()];
+    int *done = new int;
+    *done = 0;
+    for (int i = 1; i < getNoVertices(); i++)
+    {
+        int** graphCopy = getGraphCopy();
+        int** graphBackup = getGraphCopy();
+        // Code remaining for the removing edge and checking disconnectivity
+        CombiVertices(done, i, 0, 0, check, getNoVertices(), graphCopy, graphBackup);
+
+         for (int i = 0; i < getNoVertices(); i++)
+        {
+            delete[] graphCopy[i];
+            delete[] graphBackup[i];
+        }
+        delete[] graphCopy;
+        delete[] graphBackup;
+        
+    }
 }

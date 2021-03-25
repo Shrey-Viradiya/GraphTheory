@@ -58,5 +58,35 @@ int main(){
 
     graphB.minimumCutVertex();
 
+    UndirectedGraphMatrix graphC("Tesla", 10);
+
+    // adding some edges in graph A
+
+    //  0 - 1 --- 4----5----6---7
+    //  | x      |       \  | / |
+    //  2 - 3 ---         | 8---9
+    //                    ------| 
+
+    graphC.addEdge(0,1);
+    graphC.addEdge(2,3);
+    graphC.addEdge(0,3);
+    graphC.addEdge(1,2);
+    graphC.addEdge(0,2);
+    graphC.addEdge(1,4);
+    graphC.addEdge(4,3);
+    graphC.addEdge(4,5);
+    graphC.addEdge(5,6);
+    graphC.addEdge(6,7);
+    graphC.addEdge(6,8);
+    graphC.addEdge(7,9);
+    graphC.addEdge(7,8);
+    graphC.addEdge(5,9);
+    graphC.addEdge(8,9);
+
+    graphC.displayGraph();
+
+    graphC.minimumCutVertex();
+    graphC.minimumCutSet();
+
     return 0;
 }

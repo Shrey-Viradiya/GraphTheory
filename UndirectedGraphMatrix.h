@@ -289,6 +289,7 @@ void UndirectedGraphMatrix::minimumCutSet(){
             return;
         }
     }
+    delete[] visited;
     
 
     vector<pair<int, int>> edge_list;
@@ -302,7 +303,7 @@ void UndirectedGraphMatrix::minimumCutSet(){
         }
     }
 
-    bool *check = new bool[edge_list.size()];
+    bool *check = new bool[edge_list.size()]{0};
     int *done = new int;
     *done = 0;
     for (int i = 1; i < degS[0]; i++)
@@ -317,6 +318,7 @@ void UndirectedGraphMatrix::minimumCutSet(){
         }
         delete[] graphCopy;
     }
+    
 
     if(*done == 0)
     {
@@ -332,7 +334,9 @@ void UndirectedGraphMatrix::minimumCutSet(){
                 return;        
             }        
         }
-    }    
+    }
+    delete[] check;
+    delete done;  
 }
 
 void UndirectedGraphMatrix::minimumCutVertex(){
@@ -363,8 +367,9 @@ void UndirectedGraphMatrix::minimumCutVertex(){
             return;
         }
     }
+    delete[]visited;
    
-    bool *check = new bool[getNoVertices()];
+    bool *check = new bool[getNoVertices()]{0};
     int *done = new int;
     *done = 0;
     for (int i = 1; i < getNoVertices(); i++)
@@ -374,7 +379,7 @@ void UndirectedGraphMatrix::minimumCutVertex(){
         // Code remaining for the removing edge and checking disconnectivity
         CombiVertices(done, i, 0, 0, check, getNoVertices(), graphCopy, graphBackup);
 
-         for (int i = 0; i < getNoVertices(); i++)
+        for (int i = 0; i < getNoVertices(); i++)
         {
             delete[] graphCopy[i];
             delete[] graphBackup[i];
@@ -383,4 +388,6 @@ void UndirectedGraphMatrix::minimumCutVertex(){
         delete[] graphBackup;
         
     }
+    delete[] check;
+    delete done;
 }

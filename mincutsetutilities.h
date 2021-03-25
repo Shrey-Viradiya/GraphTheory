@@ -89,6 +89,7 @@ void CombiVertices(int *done, int reqLen, int s, int currLen, bool check[], int 
                 }
             }
         }
+        // cout << endl;
 
         int *visited = new int[vertices]{0};
         for (int i = 0; i < vertices; i++) {
@@ -102,11 +103,19 @@ void CombiVertices(int *done, int reqLen, int s, int currLen, bool check[], int 
         int success = 0;
         for (int k = 0; k < vertices; k++)
         {
+            // cout << visited[k] << " ";
             if(visited[k] == 0 && check[k] == false){
                 success = 1;
                 break;
             }
         }
+        // cout << endl;
+        // for (int k = 0; k < vertices; k++)
+        // {
+        //     cout << check[k] << " ";
+        // }
+        // cout << endl;
+        
         delete[]visited;
 
         if (success)

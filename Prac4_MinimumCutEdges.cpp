@@ -63,9 +63,9 @@ int main(){
     // adding some edges in graph A
 
     //  0 - 1 --- 4----5----6---7
-    //  | x      |       \  | / |
-    //  2 - 3 ---         | 8---9
-    //                    ------| 
+    //  | x      |     |    | / |
+    //  2 - 3 ---'     |    8---9
+    //                 '--------' 
 
     graphC.addEdge(0,1);
     graphC.addEdge(2,3);

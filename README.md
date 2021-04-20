@@ -11,3 +11,4 @@ This repository contains the code for the lab session of the course Graph Theory
 | 5 | _Write a program to implement single source shortest path algorithm._ | [Prac5_Djikstra.cpp](./Prac5_Djikstra.cpp) [Djikstra.h](./Djikstra.h) |
 | 6 | _Write a program to implement All source shortest path algorithm._ | [Prac6_FloydWarshall.cpp](./Prac6_FloydWarshall.cpp) [FloydWarshall.h](./FloydWarshall.h) |
 | 7 | _Find all the spanning trees using 1) cyclic interchange for a given graph 2) Cayley's formula for a graph of n vertices._ | [Prac7_FindingAllSpanningTrees.cpp](./Prac7_FindingAllSpanningTrees.cpp) [UndirectedGraph.h](./UndirectedGraph.h) |
+| 8 | _Find maximum clique size of the graph._ | [Prac8_FindingMaxClique.cpp](./Prac8_FindingMaxClique.cpp) [UndirectedGraphMatrix.h](./UndirectedGraphMatrix.h) |

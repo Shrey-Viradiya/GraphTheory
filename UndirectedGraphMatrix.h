@@ -16,6 +16,7 @@ private:
     int *degrees;
     
 public:
+    int store[100] {0};
     UndirectedGraphMatrix(const char n[], int V);
     UndirectedGraphMatrix(const UndirectedGraphMatrix & obj);
     ~UndirectedGraphMatrix();
@@ -30,6 +31,8 @@ public:
     char * getName();
     int ** getGraphCopy();
     void displayGraph();
+    bool is_clique(int b);
+    int maxCliques(int i, int l);
     
 
     static bool CheckIsomorphism(UndirectedGraphMatrix &graphA, UndirectedGraphMatrix &graphB);
@@ -390,4 +393,44 @@ void UndirectedGraphMatrix::minimumCutVertex(){
     }
     delete[] check;
     delete done;
+}
+
+bool UndirectedGraphMatrix::is_clique(int b)
+{
+  
+    // Run a loop for all set of edges
+    for (int i = 1; i < b; i++) {
+        for (int j = i + 1; j < b; j++)
+  
+            // If any edge is missing
+            if (graph[store[i]][store[j]] == 0)
+                return false;
+    }
+    return true;
+}
+
+int UndirectedGraphMatrix::maxCliques(int i, int l)
+{
+    // Maximal clique size
+    int max_ = 0;
+  
+    // Check if any vertices from i+1
+    // can be inserted
+    for (int j = i + 1; j <= getNoVertices(); j++) {
+  
+        // Add the vertex to store
+        store[l] = j;
+  
+        // If the graph is not a clique of size k then
+        // it cannot be a clique by adding another edge
+        if (is_clique(l + 1)) {
+  
+            // Update max
+            max_ = max(max_, l);
+  
+            // Check if another edge can be added
+            max_ = max(max_, maxCliques(j, l + 1));
+        }
+    }
+    return max_;
 }

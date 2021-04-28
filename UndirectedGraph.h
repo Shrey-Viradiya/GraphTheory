@@ -13,6 +13,7 @@ public:
     static int count;
     int id;
     int numVertices;
+    int numEdges;
     vector <set <int>> graph;
     UndirectedGraph(int V);
     void addEdge(int src, int dest);
@@ -26,6 +27,7 @@ public:
     static UndirectedGraph Subtraction(UndirectedGraph graphA, UndirectedGraph graphB);
     static UndirectedGraph RingSum(UndirectedGraph graphA, UndirectedGraph graphB);
     UndirectedGraph Complement();
+    bool isPlanner();
 
     void CyclicExchange();
 
@@ -44,6 +46,7 @@ int UndirectedGraph::getNextID() {
 UndirectedGraph::UndirectedGraph(int V) {
     id = getNextID();
     numVertices = V;
+    numEdges = 0;
     for (int i = 0; i < numVertices; i++)
     {
         graph.push_back(set<int> {});
@@ -64,13 +67,18 @@ void UndirectedGraph::displayGraph() const {
 }
 
 void UndirectedGraph::addEdge(int src, int dest) {
+    auto it = find (graph[src].begin(), graph[src].end(), dest);
+    if (it == graph[src].end()) numEdges++;
     graph[src].insert(dest);
     graph[dest].insert(src);
 }
 
 void UndirectedGraph::removeEdge(int src, int dest) {
+    auto it = find (graph[src].begin(), graph[src].end(), dest);
+    if (it != graph[src].end()) numEdges--;
     graph[src].erase(dest);
     graph[dest].erase(src);
+
 }
 
 int UndirectedGraph::containsCycle() {
@@ -230,5 +238,26 @@ void UndirectedGraph::CyclicExchange() {
             }
         }
     }
+}
 
+bool UndirectedGraph::isPlanner(){
+
+    if(containsCycle()){
+        cout << "Here" << endl;
+		if(numEdges<=(3*numVertices-6)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	else{
+        cout << "There" << endl;
+		if(numEdges<=(2*numVertices-4)){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 }

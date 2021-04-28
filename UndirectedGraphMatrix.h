@@ -33,6 +33,11 @@ public:
     void displayGraph();
     bool is_clique(int b);
     int maxCliques(int i, int l);
+
+    bool isSafe (int v, const int* color, int c);
+    bool GraphColoringREC(int m, int* color, int v);
+    int * SolveGraph(int m);
+    
     
 
     static bool CheckIsomorphism(UndirectedGraphMatrix &graphA, UndirectedGraphMatrix &graphB);
@@ -433,4 +438,44 @@ int UndirectedGraphMatrix::maxCliques(int i, int l)
         }
     }
     return max_;
+}
+
+bool UndirectedGraphMatrix::isSafe (int v, const int* color, int c)
+{
+    for (int i = 0; i < noVertices; i++)
+        if (graph[v][i] && c == color[i])
+            return false;
+    return true;
+}
+
+bool UndirectedGraphMatrix::GraphColoringREC(int m, int* color, int v)
+{
+    if (v == noVertices)
+        return true;
+
+    for (int c = 1; c <= m; c++)
+    {
+        if (isSafe(v, color, c))
+        {
+            color[v] = c;
+
+            if (GraphColoringREC (m, color, v+1) == true)
+                return true;
+
+            color[v] = 0;
+        }
+    }
+
+    return false;
+}
+
+int * UndirectedGraphMatrix::SolveGraph(int m)
+{
+    int* color = (int *) calloc(noVertices, sizeof(int));
+
+    if (GraphColoringREC(m, color, 0) == false)
+    {
+        return nullptr;
+    }
+    return color;
 }
